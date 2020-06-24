@@ -12,6 +12,7 @@ RUN apk --no-cache add \
   less \
   curl \
   wget \
+  zip \
   openssl \
   git \
   ca-certificates \
