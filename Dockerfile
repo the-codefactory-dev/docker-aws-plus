@@ -1,12 +1,12 @@
-FROM alpine:latest
+FROM amazonlinux:latest
 
 ENV TERRAFORM_VERSION="0.12.25"
 ENV KUBE_LATEST_VERSION="1.15.10"
 ENV HELM_VERSION="v3.1.2"
 
-RUN apk update
+RUN yum update -y
 
-RUN apk --no-cache add \
+RUN yum install -y \
   ca-certificates \
   groff \
   less \
@@ -18,9 +18,11 @@ RUN apk --no-cache add \
   ca-certificates \
   bash \
   jq \
+  unzip \
+  tar \
   python3
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf aws/*
 
 RUN cd /tmp && \
     wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
